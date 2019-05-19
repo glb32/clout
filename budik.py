@@ -6,7 +6,7 @@ import hoangAI
 #funkce zvuku (nacte si prehravac, nacte si mp3 soubor a prehraje ho
 def zvuk():
     mixer.init()
-    mixer.music.load("/home/nigger/Downloads/alarm.mp3")
+    mixer.music.load("")
     mixer.music.play()
     #pokud hoangAI ukonci svuj beh, vypneme program
     if hoangAI.start():
