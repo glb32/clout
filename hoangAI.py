@@ -1,7 +1,6 @@
 from imutils.video import VideoStream
 from imutils.video import FPS
 import numpy as np
-import argparse
 import imutils
 import time
 import cv2
@@ -9,14 +8,8 @@ import random
 
 
 def start():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-p", "--prototxt", required=True,
-                    help="pridej k argumentu -p path k prototxt souboru")
-    ap.add_argument("-m", "--model", required=True,
-                    help="pridej path k trenovacimu modelu")
-    ap.add_argument("-c", "--confidence", type=float, default=0.2,
-                    help="minimalni sance (na odstraneni tzv slabych detekci")
-    args = vars(ap.parse_args())
+
+
     # "nacteni" hoangAI :D
     print("Loading hoangAI(TM) V.1.0.0")
     time.sleep(2.0)
@@ -31,7 +24,7 @@ def start():
 
     # nacteme si serializovany model caffe
     print("[INFO] nacitani modelu...")
-    net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
+    net = cv2.dnn.readNetFromCaffe("prototxt.txt","model.caffemodel")
 
     # zacatek video snimani
     # a take zacneme pocitat fps
@@ -43,11 +36,11 @@ def start():
     # cyklus/smycka pres ramecek vystupu videa
 
     while True:
-        # vezmeme ramecek z threadovaneho video vystupu a omezime sirku ramecku na 400 pixelu(aby to nebylo moc narocne na vykon)
+        # vezmeme ramecek z vlaknovaneho video vystupu a omezime sirku ramecku na 400 pixelu(aby to nebylo moc narocne na vykon)
         frame = vs.read()
         frame = imutils.resize(frame, width=400)
 
-        # vezmeme rozmery ramecku a prevedeme do blobu(objektu)
+        # vezmem rozmery ramecku a prevedeme do blobu(objektu)
         (h, w) = frame.shape[:2]
         blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)),
                                      0.007843, (300, 300), 127.5)
@@ -63,7 +56,7 @@ def start():
             confidence = detections[0, 0, i, 2]
 
             # odstranime "slabe" detekce s tim ze `confidence` (tedy jak si je svym uhodnutim pocitac jisty) je vetsi nez minimalni confidence uvedeny v argumentaci pri spusteni
-            if confidence > args["confidence"]:
+            if confidence > 0.5 :
                 # vytahneme index ze stitku tridy
                 # `detections`, a pak vypocitame souradnice (x, y)
                 # pro ohranicujici ramecek objektu
