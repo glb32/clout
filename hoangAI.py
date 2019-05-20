@@ -47,7 +47,7 @@ def start():
         frame = vs.read()
         frame = imutils.resize(frame, width=400)
 
-        # vezmem rozmery ramecku a prevedeme do blobu(objektu)
+        # vezmeme rozmery ramecku a prevedeme do blobu(objektu)
         (h, w) = frame.shape[:2]
         blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)),
                                      0.007843, (300, 300), 127.5)
