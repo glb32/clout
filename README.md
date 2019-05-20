@@ -1,5 +1,5 @@
 # hoangAlarm
 AI Alarm clock
 
-usage: python budik.py -p[PROTOTXT_PATH] -m [MODEL_PATH]
-Needed libraries: opencv2, numpy, time,thread
+usage: python budik.py (time in hours)
+Needed libraries: opencv2, numpy, time,thread,pygame
